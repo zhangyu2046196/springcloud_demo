@@ -1,0 +1,29 @@
+server:
+  port: 7009
+spring:
+  application:
+    name: zuul-server
+eureka:
+  instance:
+    hostname: eureka-server
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+zuul:
+  prefix: /youyuan
+  ignored-services: "*"
+  routes:
+    ATEST:
+      serviceId: A-SERVER
+      path: /a/**
+    BTEST:
+      serviceId: B-SERVER
+      path: /b/**
+    CTEST:
+      serviceId: C-SERVER
+      path: /c/**
+    DTEST:
+      serviceId: D-SERVER
+      path: /d/**
+
