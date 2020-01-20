@@ -7,6 +7,8 @@ eureka:
   instance:
     hostname: eureka-server
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3  #调整为服务提供者每隔3秒向注册中心发送一次心跳
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka/
+    registry-fetch-interval-seconds: 3  #调整为服务消费者每隔3秒拉取ReadOnlyCache中的注册表中的信息

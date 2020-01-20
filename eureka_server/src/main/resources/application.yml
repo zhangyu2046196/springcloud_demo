@@ -3,8 +3,12 @@ server:
 eureka:
   instance:
     hostname: eureka-server
+    lease-expiration-duration-in-seconds: 6  #调整eureka服务在6秒内没有收到服务提供者发送心跳就从服务注册表中删除服务提供者的地址
   client:
     service-url:
       defaultZone: http://localhost:${server.port}/eureka/
     fetch-registry: false
     register-with-eureka: false
+  server:
+    response-cache-update-interval-ms: 3000   #ReadWriteCache同步数据到ReadOnlyCache线程的定时事件调整为3秒
+    eviction-interval-timer-in-ms: 6000  #调整eureka的服务中的线程每隔6秒检测服务提供者发送心跳情况
