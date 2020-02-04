@@ -7,6 +7,17 @@ eureka:
   instance:
     hostname: eureka-server
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3  #调整为服务提供者每隔3秒向注册中心发送一次心跳
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka
+    registry-fetch-interval-seconds: 3  #调整为服务消费者每隔3秒拉取ReadOnlyCache中的注册表中的信息
+
+ribbon:
+  eager-load:
+    enabled: true   #开启ribbon组件的饥饿加载，使微服务在启动的时候就初始化ribbon组件，避免第一次请求初始化造成的请求超时的问题
+  ConnectTimeout: 3000              #请求连接的超时时间
+  ReadTimeout: 3000                 #请求处理的超时时间
+  OkToRetryOnAllOperations: true    #对所有的操作请求都进行重试，如果是get则可以，如果是post,put等操作没有实现幂等的情况下是很危险的
+  MaxAutoRetries: 1                 #最大重试次数，当Eureka中可以找到服务，但是服务连不上时将会重试
+  MaxAutoRetriesNextServer: 1       #切换实例的重试次数
